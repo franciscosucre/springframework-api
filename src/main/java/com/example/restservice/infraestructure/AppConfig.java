@@ -1,6 +1,7 @@
 package com.example.restservice.infraestructure;
 
-import com.example.restservice.infraestructure.repository.CatRepository;
+import com.example.restservice.infraestructure.repositories.CatRepository;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,4 +12,5 @@ public class AppConfig {
     public CatRepository catRepository() {
         return new CatRepository();
     }
+
 }

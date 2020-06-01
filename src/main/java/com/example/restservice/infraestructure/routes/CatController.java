@@ -3,9 +3,9 @@ package com.example.restservice.infraestructure.routes;
 import java.util.ArrayList;
 
 import com.example.restservice.domain.Cat;
-import com.example.restservice.infraestructure.repository.CatRepository;
+import com.example.restservice.infraestructure.repositories.CatRepository;
 
-import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/cats")
@@ -43,7 +45,7 @@ class CatController {
     Cat findOne(@PathVariable String id) throws NotFound {
         Cat cat = repository.findOne(id);
         if (cat == null){
-            throw new NotFound();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find cat");
         }
         return cat;
     }
@@ -52,7 +54,7 @@ class CatController {
     Cat updateCat(@RequestBody Cat data, @PathVariable String id) throws NotFound {
         Cat cat = repository.update(id, data.name);
         if (cat == null){
-            throw new NotFound();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find cat");
         }
         return cat;
     }
@@ -61,7 +63,7 @@ class CatController {
     Cat deleteCat(@PathVariable String id) throws NotFound {
         Cat cat = repository.remove(id);
         if (cat == null){
-            throw new NotFound();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find cat");
         }
         return cat;
     }

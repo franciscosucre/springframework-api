@@ -1,4 +1,4 @@
-package com.example.restservice.infraestructure.repository;
+package com.example.restservice.infraestructure.repositories;
 
 import java.util.ArrayList;
 
